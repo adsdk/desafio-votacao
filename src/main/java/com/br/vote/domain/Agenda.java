@@ -1,18 +1,18 @@
 package com.br.vote.domain;
 
-import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "test")
+@Document(collection = "agenda")
 @Data
-public class Test {
+@Builder
+public class Agenda {
 
     @Id
     private String id;
 
-    private String name;
-
-    private LocalDateTime created = LocalDateTime.now();
+    private String title;
+    private String description;
 }
