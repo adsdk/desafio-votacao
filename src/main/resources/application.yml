@@ -1,0 +1,23 @@
+logging:
+  level:
+    root: info
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/votes?authSource=admin
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      properties:
+        spring.json.add.type.headers: false
+  cloud:
+    stream:
+      bindings:
+        finishedVotes-out-0:
+          destination: topic.finished.votes
+    function:
+      definition: finishedVotes
+server:
+  port: 8090
