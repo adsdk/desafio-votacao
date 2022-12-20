@@ -1,6 +1,5 @@
 package com.br.vote.service;
 
-import com.br.vote.domain.Session;
 import com.br.vote.domain.requests.SessionRequest;
 import com.br.vote.exception.AgendaHasActiveSessionException;
 import com.br.vote.exception.AgendaNoExistsException;
@@ -21,13 +20,13 @@ public class CreateSessionService {
     private final SessionRepository sessionRepository;
     private final AgendaRepository agendaRepository;
 
-    public Mono<Session> run(String agendaId, SessionRequest request) {
+    public Mono<Void> run(String agendaId, SessionRequest request) {
         var session = SessionMapper.toSession(request);
         return agendaRepository
                 .existsById(agendaId)
                 .flatMap(validationExistsAgenda -> {
                     if (!validationExistsAgenda) {
-                        log.error("Erro ao criar sessão: agenda={} não existe.", agendaId);
+                        log.info("Erro ao criar sessão: agenda={} não existe.", agendaId);
                         return Mono.error(new AgendaNoExistsException());
                     }
                     var now = LocalDateTime.now();
@@ -35,7 +34,7 @@ public class CreateSessionService {
                 })
                 .flatMap(validationAgendaHasSession -> {
                     if (validationAgendaHasSession) {
-                        log.error("Erro ao criar sessão: agenda={}, já possui sessão ativa.", agendaId);
+                        log.info("Erro ao criar sessão: agenda={}, já possui sessão ativa.", agendaId);
                         return Mono.error(new AgendaHasActiveSessionException());
                     }
                     return agendaRepository.findById(agendaId);
@@ -43,6 +42,8 @@ public class CreateSessionService {
                 .flatMap(agenda -> {
                     session.setAgenda(agenda);
                     return sessionRepository.save(session);
-                });
+                })
+                .doOnNext(s -> log.info("Sessão criada com sucesso: id={}", s.getId()))
+                .then();
     }
 }

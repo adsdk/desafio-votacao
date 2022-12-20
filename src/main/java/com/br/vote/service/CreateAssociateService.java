@@ -1,6 +1,5 @@
 package com.br.vote.service;
 
-import com.br.vote.domain.Associate;
 import com.br.vote.domain.requests.AssociateRequest;
 import com.br.vote.exception.DocumentExistsException;
 import com.br.vote.mapper.AssociateMapper;
@@ -17,7 +16,7 @@ public class CreateAssociateService {
 
     private final AssociateRepository associateRepository;
 
-    public Mono<Associate> run(AssociateRequest request) {
+    public Mono<Void> run(AssociateRequest request) {
         var associate = AssociateMapper.toAssociate(request);
         return associateRepository
                 .existsByDocument(associate.getDocument())
@@ -28,6 +27,7 @@ public class CreateAssociateService {
                     }
                     return associateRepository.save(associate);
                 })
-                .doOnNext(a -> log.info("Associado criado com sucesso: id={}", a.getId()));
+                .doOnNext(a -> log.info("Associado criado com sucesso: id={}", a.getId()))
+                .then();
     }
 }

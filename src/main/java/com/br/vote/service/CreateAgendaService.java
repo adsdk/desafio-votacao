@@ -1,6 +1,5 @@
 package com.br.vote.service;
 
-import com.br.vote.domain.Agenda;
 import com.br.vote.domain.requests.AgendaRequest;
 import com.br.vote.mapper.AgendaMapper;
 import com.br.vote.repository.AgendaRepository;
@@ -16,8 +15,11 @@ public class CreateAgendaService {
 
     private final AgendaRepository agendaRepository;
 
-    public Mono<Agenda> run(AgendaRequest agendaRequest) {
+    public Mono<Void> run(AgendaRequest agendaRequest) {
         var agenda = AgendaMapper.toAgenda(agendaRequest);
-        return agendaRepository.save(agenda).doOnNext(a -> log.info("Pauta criada com sucesso: id={}", a.getId()));
+        return agendaRepository
+                .save(agenda)
+                .doOnNext(a -> log.info("Pauta criada com sucesso: id={}", a.getId()))
+                .then();
     }
 }
