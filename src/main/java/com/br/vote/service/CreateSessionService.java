@@ -34,7 +34,7 @@ public class CreateSessionService {
                 })
                 .flatMap(validationAgendaHasSession -> {
                     if (validationAgendaHasSession) {
-                        log.info("Erro ao criar sessao: agenda={}, já possui sessao ativa.", agendaId);
+                        log.info("Erro ao criar sessao: agenda={}, ja possui sessao ativa.", agendaId);
                         return Mono.error(new AgendaHasActiveSessionException());
                     }
                     return agendaRepository.findById(agendaId);

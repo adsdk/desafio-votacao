@@ -39,7 +39,7 @@ public class SessionController {
         return createSessionService.run(agendaId, request);
     }
 
-    @PostMapping("/{sessionId}/associate/{associateId}")
+    @PostMapping("/{sessionId}/associate/{associateId}/vote")
     public Mono<Void> createVote(
             @PathVariable String sessionId, @PathVariable String associateId, @RequestBody VoteRequest request) {
         return createVoteService.run(sessionId, associateId, request);

@@ -25,6 +25,6 @@ public class ApiValidationClient {
                 .retrieve()
                 .bodyToMono(ApiValidationResponse.class)
                 .map(response -> ABLE_TO_VOTE.equals(response.getStatus()))
-                .doOnNext(r -> log.info("Api de validação retornou com sucesso."));
+                .doOnNext(r -> log.info("Api de validacao retornou com sucesso."));
     }
 }
