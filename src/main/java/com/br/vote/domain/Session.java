@@ -1,5 +1,6 @@
 package com.br.vote.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -19,6 +20,10 @@ public class Session {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private List<Vote> votes;
+
+    @JsonIgnore
     private Boolean synced;
+
+    @JsonIgnore
     private LocalDateTime syncDate;
 }
