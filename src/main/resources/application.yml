@@ -21,3 +21,5 @@ spring:
       definition: finishedVotes
 server:
   port: 8090
+client:
+  validationUrl: 'https://my-json-server.typicode.com/mateusbpt/desafio-votacao-api-validacao/users/{document}'
