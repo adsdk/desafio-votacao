@@ -19,6 +19,8 @@ public class Session {
     private Agenda agenda;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
+    @JsonIgnore
     private List<Vote> votes;
 
     @JsonIgnore

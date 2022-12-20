@@ -26,7 +26,7 @@ public class CreateSessionService {
                 .existsById(agendaId)
                 .flatMap(validationExistsAgenda -> {
                     if (!validationExistsAgenda) {
-                        log.info("Erro ao criar sessão: agenda={} não existe.", agendaId);
+                        log.info("Erro ao criar sessao: agenda={} nao existe.", agendaId);
                         return Mono.error(new AgendaNoExistsException());
                     }
                     var now = LocalDateTime.now();
@@ -34,7 +34,7 @@ public class CreateSessionService {
                 })
                 .flatMap(validationAgendaHasSession -> {
                     if (validationAgendaHasSession) {
-                        log.info("Erro ao criar sessão: agenda={}, já possui sessão ativa.", agendaId);
+                        log.info("Erro ao criar sessao: agenda={}, já possui sessao ativa.", agendaId);
                         return Mono.error(new AgendaHasActiveSessionException());
                     }
                     return agendaRepository.findById(agendaId);

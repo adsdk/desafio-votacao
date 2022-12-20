@@ -22,7 +22,7 @@ public class CreateAssociateService {
                 .existsByDocument(associate.getDocument())
                 .flatMap(validation -> {
                     if (validation) {
-                        log.error("Erro ao criar o associado, cpf={} já cadastrado.", associate.getDocument());
+                        log.info("Erro ao criar o associado, cpf={} ja cadastrado.", associate.getDocument());
                         return Mono.error(new DocumentExistsException());
                     }
                     return associateRepository.save(associate);
