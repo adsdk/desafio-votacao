@@ -1,5 +1,6 @@
 package com.br.vote.messaging;
 
+import com.br.vote.domain.responses.VoteFinishedResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -17,15 +18,17 @@ import reactor.core.publisher.Sinks;
 @RequiredArgsConstructor
 public class KafkaFinishedVoteSender {
 
-    private final Sinks.Many<Message<String>> sink = Sinks.many().unicast().onBackpressureBuffer();
+    private final Sinks.Many<Message<VoteFinishedResponse>> sink =
+            Sinks.many().unicast().onBackpressureBuffer();
 
     @Bean
-    public Supplier<Flux<Message<String>>> finishedVotes() {
+    public Supplier<Flux<Message<VoteFinishedResponse>>> finishedVotes() {
         return sink::asFlux;
     }
 
-    public void run(String message) {
-        var headers = new MessageHeaders(Map.of(KafkaHeaders.KEY, "test".getBytes(StandardCharsets.UTF_8)));
+    public void run(VoteFinishedResponse message) {
+        var headers = new MessageHeaders(
+                Map.of(KafkaHeaders.KEY, message.getSessionId().getBytes(StandardCharsets.UTF_8)));
         sink.tryEmitNext(MessageBuilder.createMessage(message, headers));
     }
 }
