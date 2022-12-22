@@ -1,5 +1,6 @@
-package com.br.vote.controller;
+package com.br.vote.controller.v1;
 
+import com.br.vote.controller.api.SessionControllerApi;
 import com.br.vote.domain.Session;
 import com.br.vote.domain.requests.SessionRequest;
 import com.br.vote.domain.requests.VoteRequest;
@@ -8,7 +9,7 @@ import com.br.vote.service.CreateSessionService;
 import com.br.vote.service.CreateVoteService;
 import com.br.vote.service.FindActiveSessionService;
 import com.br.vote.service.FindAllSessionService;
-import com.br.vote.service.SessionDetailsService;
+import com.br.vote.service.SessionDetailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,15 +24,15 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/session")
+@RequestMapping("/v1/session")
 @RequiredArgsConstructor
-public class SessionController {
+public class SessionController implements SessionControllerApi {
 
     private final CreateSessionService createSessionService;
     private final CreateVoteService createVoteService;
     private final FindActiveSessionService findActiveSessionService;
     private final FindAllSessionService findAllSessionService;
-    private final SessionDetailsService sessionDetailsService;
+    private final SessionDetailService sessionDetailService;
 
     @PostMapping("/agenda/{agendaId}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,6 +41,7 @@ public class SessionController {
     }
 
     @PostMapping("/{sessionId}/associate/{associateId}/vote")
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<Void> createVote(
             @PathVariable String sessionId, @PathVariable String associateId, @RequestBody VoteRequest request) {
         return createVoteService.run(sessionId, associateId, request);
@@ -57,6 +59,6 @@ public class SessionController {
 
     @GetMapping("{sessionId}/details")
     public Mono<VoteFinishedResponse> details(@PathVariable String sessionId) {
-        return sessionDetailsService.run(sessionId);
+        return sessionDetailService.run(sessionId);
     }
 }

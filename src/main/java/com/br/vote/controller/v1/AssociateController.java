@@ -1,5 +1,6 @@
-package com.br.vote.controller;
+package com.br.vote.controller.v1;
 
+import com.br.vote.controller.api.AssociateControllerApi;
 import com.br.vote.domain.Associate;
 import com.br.vote.domain.requests.AssociateRequest;
 import com.br.vote.service.CreateAssociateService;
@@ -18,9 +19,9 @@ import reactor.core.publisher.Mono;
 
 // Usado apenas para cadastrar os cpfs e buscar os ids para teste
 @RestController
-@RequestMapping("/associate")
+@RequestMapping("/v1/associate")
 @RequiredArgsConstructor
-public class AssociateController {
+public class AssociateController implements AssociateControllerApi {
 
     private final CreateAssociateService createAssociateService;
     private final FindAllAssociateService findAllAssociateService;
