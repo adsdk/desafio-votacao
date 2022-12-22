@@ -43,7 +43,7 @@ public class CreateSessionService {
                     session.setAgenda(agenda);
                     return sessionRepository.save(session);
                 })
-                .doOnNext(s -> log.info("Sessão criada com sucesso: id={}", s.getId()))
+                .doOnNext(s -> log.info("Sessao criada com sucesso: id={}", s.getId()))
                 .then();
     }
 }
