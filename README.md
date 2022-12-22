@@ -19,8 +19,8 @@ Para executar o projeto, após baixar o repositório e realizar o download das d
 ## Funcionalidades
 
 - Cadastrar e listar todos os associados.
-- Cadastrar e listar todas as pautas.
-- Cadastrar, adicionar votos, listar ativas, listar todas as sessões de voto.
+- Cadastrar, listar sessões da pauta e listar todas as pautas.
+- Cadastrar, adicionar votos na sessão, listar sessões ativas, listar todas as sessões de voto e mostrar detalhes da sessão.
 
 
 ## Stack utilizada
