@@ -2,6 +2,7 @@ package com.br.vote.service;
 
 import com.br.vote.domain.responses.VoteFinishedResponse;
 import com.br.vote.exception.ActiveSessionException;
+import com.br.vote.exception.SessionNoExistsException;
 import com.br.vote.mapper.VoteMapper;
 import com.br.vote.repository.SessionRepository;
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class SessionDetailService {
     public Mono<VoteFinishedResponse> run(String sessionId) {
         return sessionRepository
                 .findById(sessionId)
+                .switchIfEmpty(Mono.error(new SessionNoExistsException()))
                 .flatMap(session -> {
                     var now = LocalDateTime.now();
                     var activeSession = session.getEndDate().isAfter(now);

@@ -8,6 +8,7 @@ import com.br.vote.domain.Session;
 import com.br.vote.domain.Vote;
 import com.br.vote.domain.enums.VoteType;
 import com.br.vote.exception.ActiveSessionException;
+import com.br.vote.exception.SessionNoExistsException;
 import com.br.vote.repository.SessionRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,6 +53,18 @@ public class SessionDetailServiceTest {
                     assertEquals(voteNoCount, sessionDetail.getVotesNo());
                 })
                 .verifyComplete();
+    }
+
+    @Test
+    @DisplayName("Deve retornar um erro ao detalhar a sessao = [Sessao nao existe].")
+    public void shouldSessionDetailSessionNoExistsError() {
+        var sessionId = "test";
+
+        when(sessionRepository.findById(anyString())).thenReturn(Mono.empty());
+
+        StepVerifier.create(sessionDetailService.run(sessionId))
+                .expectError(SessionNoExistsException.class)
+                .verify();
     }
 
     @Test
