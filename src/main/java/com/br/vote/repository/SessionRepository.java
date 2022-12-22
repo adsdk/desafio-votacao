@@ -15,4 +15,6 @@ public interface SessionRepository extends ReactiveCrudRepository<Session, Strin
     Flux<Session> findByEndDateLessThanAndSyncedFalse(LocalDateTime localDateTime);
 
     Flux<Session> findByEndDateGreaterThanEqual(LocalDateTime date);
+
+    Flux<Session> findByAgendaId(String agendaId);
 }
