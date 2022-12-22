@@ -37,3 +37,5 @@ Links para facilitar o uso da aplicação:
 - [Verificar os dados do MongoDB](http://localhost:8081/db/votes/)
 
 - [Verificar os tópicos do Kafka](http://localhost:19000/)
+
+- [API Validação](https://my-json-server.typicode.com/mateusbpt/desafio-votacao-api-validacao/users/) - Como a API de validação não estava ativa, criei um mock para fazer integração via client.
